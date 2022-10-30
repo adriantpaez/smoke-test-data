@@ -1,9 +1,9 @@
 global:
     scrape_interval: 15s
-    evaluation_inerval: 30s
+    evaluation_interval: 30s
 scrape_configs:
 {% for label, ip in nodes_data %}
-    - job_name: {{ label }}
+    - job_name: "{{ label }}"
       scrape_timeout: 10s
       scheme: http
       static_configs:
