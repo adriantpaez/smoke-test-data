@@ -2,13 +2,18 @@ global:
     scrape_interval: 15s
     evaluation_interval: 30s
 scrape_configs:
-{% for label, ip, cl_consensus in nodes_data %}
+{% for label, ip, execution_client, beacon_client in nodes_data %}
     - job_name: "{{ label }}"
       scrape_timeout: 10s
       scheme: http
       static_configs:
+      # Execution
+      # Beacon
         - targets: [ "{{ ip }}:5054" ]
           labels:
-            cl_client: "{{ cl_consensus }}"
+            instance: "{{ label }}"
+            node_type: "beacon"
+            client: "{{ beacon_client }}"
             ip_address: "{{ ip }}"
+      # Validator
 {% endfor %}
