@@ -2,13 +2,13 @@ global:
     scrape_interval: 15s
     evaluation_interval: 30s
 scrape_configs:
-{% for label, ip in nodes_data %}
+{% for label, ip, cl_consensus in nodes_data %}
     - job_name: "{{ label }}"
       scrape_timeout: 10s
       scheme: http
       static_configs:
-        - targets: [ "{{ ip }}:4000" ]
+        - targets: [ "{{ ip }}:5054" ]
           labels:
-            cl_client: "lighthouse"
+            cl_client: "{{ cl_consensus }}"
             ip_address: "{{ ip }}"
 {% endfor %}
