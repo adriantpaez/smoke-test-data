@@ -1,5 +1,6 @@
 import sys
 import os
+import shutil
 from jinja2 import Template
 
 
@@ -14,8 +15,8 @@ def grafana_datasources(out, nodes_data):
 
 
 def grafana_dashboards(out, nodes_data):
-    generate("./grafana/dashboards/providers.yml.j2",
-             {'out': out}, f"{out}/grafana/dashboards/providers.yml")
+    shutil.copytree("./grafana/dashboards",
+                    f"{out}/grafana/dashboards", dirs_exist_ok=True)
 
 
 def generate(template_path, data, out):

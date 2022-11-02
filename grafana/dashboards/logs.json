@@ -1,0 +1,132 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "${logs_source}"
+        },
+        "description": "",
+        "gridPos": {
+          "h": 11,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": false,
+          "sortOrder": "Descending",
+          "wrapLogMessage": false
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "${logs_source}"
+            },
+            "editorMode": "builder",
+            "expr": "{compose_project=\"root\", compose_service=\"execution\"} |= ``",
+            "queryType": "range",
+            "refId": "A"
+          }
+        ],
+        "title": "Execution",
+        "type": "logs"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "${logs_source}"
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 11
+        },
+        "id": 4,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": false,
+          "sortOrder": "Descending",
+          "wrapLogMessage": false
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "${logs_source}"
+            },
+            "editorMode": "builder",
+            "expr": "{compose_project=\"root\", compose_service=\"consensus\"} |= ``",
+            "queryType": "range",
+            "refId": "A"
+          }
+        ],
+        "title": "Consensus",
+        "type": "logs"
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "hide": 0,
+          "includeAll": false,
+          "label": "Logs source",
+          "multi": false,
+          "name": "logs_source",
+          "options": [],
+          "query": "loki",
+          "queryValue": "",
+          "refresh": 1,
+          "regex": "loki-smoke-test.*",
+          "skipUrlSync": false,
+          "type": "datasource"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "title": "Smoke test logs",
+    "version": 2
+  }
