@@ -1,0 +1,9 @@
+apiVersion: 1
+
+providers:
+  - name: 'smoke tests dashboard provider'
+    folder: 'smoke tests'
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: "{{out}}/grafana/dashboards"

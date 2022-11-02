@@ -2,19 +2,30 @@ import sys
 import os
 from jinja2 import Template
 
+
 def prometheus_config(out, nodes_data):
-    generate("./prometheus/prometheus.yml.j2",nodes_data,f"{out}/prometheus/prometheus.yml")
+    generate("./prometheus/prometheus.yml.j2",
+             {'nodes_data': nodes_data}, f"{out}/prometheus/prometheus.yml")
+
 
 def grafana_datasources(out, nodes_data):
-    generate("./grafana/datasources/loki.yml.j2", nodes_data, f"{out}/grafana/datasources/loki.yml")
+    generate("./grafana/datasources/loki.yml.j2",
+             {'nodes_data': nodes_data}, f"{out}/grafana/datasources/loki.yml")
+
+
+def grafana_dashboards(out, nodes_data):
+    generate("./grafana/dashboards/providers.yml.j2",
+             {'out': out}, f"{out}/grafana/dashboards/providers.yml")
+
 
 def generate(template_path, data, out):
     with open(template_path) as f:
-        tmpl:Template = Template(f.read())
+        tmpl: Template = Template(f.read())
     render = tmpl.render(data)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w") as out:
         out.write(render)
+
 
 if __name__ == "__main__":
     out = sys.argv[1]
@@ -24,5 +35,6 @@ if __name__ == "__main__":
     beacon_clients = sys.argv[5].split(',')
 
     nodes_data = list(zip(labels, ips, execution_clients, beacon_clients))
-    prometheus_config(out,{'nodes_data': nodes_data})
-    grafana_datasources(out,{'nodes_data': nodes_data})
+    prometheus_config(out, nodes_data)
+    grafana_datasources(out, nodes_data)
+    grafana_dashboards(out, nodes_data)
