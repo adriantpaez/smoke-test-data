@@ -1,0 +1,7 @@
+apiVersion: 1
+
+datasources:{% for label, ip, execution_client, beacon_client in nodes_data %}
+    - name: "loki-{{label}}"
+      type: "loki"
+      url: "http://{{ip}}:3100"
+{%endfor%}
