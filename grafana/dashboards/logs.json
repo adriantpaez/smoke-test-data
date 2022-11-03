@@ -99,6 +99,43 @@
         ],
         "title": "Consensus",
         "type": "logs"
+      },
+      {
+        "datasource": {
+          "type": "loki",
+          "uid": "${logs_source}"
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 21
+        },
+        "id": 6,
+        "options": {
+          "dedupStrategy": "none",
+          "enableLogDetails": true,
+          "prettifyLogMessage": false,
+          "showCommonLabels": false,
+          "showLabels": false,
+          "showTime": false,
+          "sortOrder": "Descending",
+          "wrapLogMessage": false
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "loki",
+              "uid": "${logs_source}"
+            },
+            "editorMode": "builder",
+            "expr": "{compose_project=\"root\", compose_service=\"validator\"} |= ``",
+            "queryType": "range",
+            "refId": "A"
+          }
+        ],
+        "title": "Validator",
+        "type": "logs"
       }
     ],
     "refresh": "30s",
